@@ -27,7 +27,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Alachisoft.NCache.Common.Configuration;
 using Alachisoft.NCache.Integrations.NHibernate.Cache.Configuration;

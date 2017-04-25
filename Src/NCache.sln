@@ -1,5 +1,7 @@
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.7
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCCache", "NCCache\NCCache.csproj", "{BF3BCF64-ADEB-455B-AD8A-39EE84EE300D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCCluster", "NCCluster\NCCluster.csproj", "{05B496F4-4822-4AD1-BA75-C0D6BCD3428D}"
@@ -25,8 +27,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCWebCache", "NCWebCache\NCWebCache.csproj", "{4F8D7B6F-F031-4B7B-9871-63E6EE2ACC47}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCParser", "NCParser\NCParser.csproj", "{C12C28E3-449D-4ED9-800F-91C18C0A3598}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NCRegistry", "NCRegistry\NCRegistry.2x.vcxproj", "{76AFD3ED-7EAE-4836-AAB4-5D705CA346E1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -330,23 +330,6 @@ Global
 		{C12C28E3-449D-4ED9-800F-91C18C0A3598}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{C12C28E3-449D-4ED9-800F-91C18C0A3598}.Release|Win32.ActiveCfg = Release|Any CPU
 		{C12C28E3-449D-4ED9-800F-91C18C0A3598}.Release|Win32.Build.0 = Release|Any CPU
-		{76AFD3ED-7EAE-4836-AAB4-5D705CA346E1}.Debug.2x|Any CPU.ActiveCfg = Debug|x64
-		{76AFD3ED-7EAE-4836-AAB4-5D705CA346E1}.Debug.2x|Mixed Platforms.ActiveCfg = Debug|x64
-		{76AFD3ED-7EAE-4836-AAB4-5D705CA346E1}.Debug.2x|Mixed Platforms.Build.0 = Debug|x64
-		{76AFD3ED-7EAE-4836-AAB4-5D705CA346E1}.Debug.2x|Win32.ActiveCfg = Debug|x64
-		{76AFD3ED-7EAE-4836-AAB4-5D705CA346E1}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{76AFD3ED-7EAE-4836-AAB4-5D705CA346E1}.Debug|Mixed Platforms.ActiveCfg = Debug|x64
-		{76AFD3ED-7EAE-4836-AAB4-5D705CA346E1}.Debug|Mixed Platforms.Build.0 = Debug|x64
-		{76AFD3ED-7EAE-4836-AAB4-5D705CA346E1}.Debug|Win32.ActiveCfg = Debug|Win32
-		{76AFD3ED-7EAE-4836-AAB4-5D705CA346E1}.Debug|Win32.Build.0 = Debug|Win32
-		{76AFD3ED-7EAE-4836-AAB4-5D705CA346E1}.Release.2x|Any CPU.ActiveCfg = Release|x64
-		{76AFD3ED-7EAE-4836-AAB4-5D705CA346E1}.Release.2x|Mixed Platforms.ActiveCfg = Release|x64
-		{76AFD3ED-7EAE-4836-AAB4-5D705CA346E1}.Release.2x|Mixed Platforms.Build.0 = Release|x64
-		{76AFD3ED-7EAE-4836-AAB4-5D705CA346E1}.Release.2x|Win32.ActiveCfg = Release|x64
-		{76AFD3ED-7EAE-4836-AAB4-5D705CA346E1}.Release|Any CPU.ActiveCfg = Release|x64
-		{76AFD3ED-7EAE-4836-AAB4-5D705CA346E1}.Release|Mixed Platforms.ActiveCfg = Release|Win32
-		{76AFD3ED-7EAE-4836-AAB4-5D705CA346E1}.Release|Win32.ActiveCfg = Release|Win32
-		{76AFD3ED-7EAE-4836-AAB4-5D705CA346E1}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

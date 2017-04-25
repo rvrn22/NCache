@@ -33,7 +33,7 @@
     </SccAuxPath>
     <TargetZone>Custom</TargetZone>
     <GenerateManifests>true</GenerateManifests>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <OldToolsVersion>2.0</OldToolsVersion>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
