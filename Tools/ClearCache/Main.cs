@@ -17,8 +17,6 @@ using System.Globalization;
 
 using Alachisoft.NCache.Web.Caching;
 using Alachisoft.NCache.Tools.Common;
-using Alachisoft.NCache.Management.ServiceControl;
-
 
 
 namespace Alachisoft.NCache.Tools.ClearCache

@@ -15,7 +15,6 @@ using System;
 using System.Text;
 using System.Globalization;
 using Alachisoft.NCache.Tools.Common;
-using Alachisoft.NCache.Management.ServiceControl;
 using Alachisoft.NCache.Web.Caching;
 using Alachisoft.NCache.Runtime;
 

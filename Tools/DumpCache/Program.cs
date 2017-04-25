@@ -17,7 +17,6 @@ using System.Text;
 using System.Collections;
 using Alachisoft.NCache.Web.Caching;
 using Alachisoft.NCache.Tools.Common;
-using Alachisoft.NCache.Management.ServiceControl;
 using Alachisoft.NCache.Web.Caching;
 using Factory = Alachisoft.NCache.Web.Caching.NCache;
 

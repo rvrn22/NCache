@@ -11,29 +11,26 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
 using System;
-using System.Text;
 using System.Diagnostics;
-using System.Globalization;
 using Alachisoft.NCache.Tools.Common;
-using Alachisoft.NCache.Management.ServiceControl;
 
 namespace Alachisoft.NCache.Tools.StressTestTool
 {
     /// <summary>
-    /// Main application class
+    ///     Main application class
     /// </summary>
-    class Application
+    internal class Application
     {
         /// <summary>
-        /// The main entry point for the application.
+        ///     The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             try
             {
-          
                 StressTestTool.Run(args);
             }
             catch (Exception e)
@@ -42,110 +39,95 @@ namespace Alachisoft.NCache.Tools.StressTestTool
             }
         }
     }
-    
+
     /// <summary>
-    /// Summary description for StressTool.
+    ///     Summary description for StressTool.
     /// </summary>
-    /// 
-    public class StressTestToolParam: CommandLineParamsBase
+    public class StressTestToolParam : CommandLineParamsBase
     {
-        private string _cacheId = "";
-        private int _totalLoopCount = 0;
-        private int _testCaseIterations = 20;
-        private int _testCaseIterationDelay = 0;
-        private int _getsPerIteration = 1;
-        private int _updatesPerIteration = 1;
-        private int _dataSize = 1024;
-        private int _expiration = 60;
-        private int _threadCount = 1;
-        private int _reportingInterval = 5000;
+        [Argument("", "")]
+        public string CacheId { get; set; } = "";
 
-        public StressTestToolParam()
-        {}
+        [Argument(@"/m", @"/item-size")]
+        public int DataSize { get; set; } = 1024;
 
-        [ArgumentAttribute("", "")]
-        public  string CacheId
-        {
-            get { return _cacheId; }
-            set { _cacheId = value; }
-        }
+        [Argument(@"/e", @"/sliding-expiration")]
+        public int Expiration { get; set; } = 60;
 
-        [ArgumentAttribute(@"/n", @"/item-count")]
-        public  int TotalLoopCount
-        {
-            get { return _totalLoopCount; }
-            set { _totalLoopCount = value; }
-        }
+        [Argument(@"/g", @"/gets-per-iteration")]
+        public int GetsPerIteration { get; set; } = 1;
 
-        [ArgumentAttribute(@"/i", @"/test-case-iterations")]
-        public  int TestCaseIterations
-        {
-            get { return _testCaseIterations; }
-            set { _testCaseIterations = value; }
-        }
+        [Argument(@"/r", @"/reporting-interval")]
+        public int ReportingInterval { get; set; } = 5000;
 
-        [ArgumentAttribute(@"/d", @"/test-case-iteration-delay")]
-        public  int TestCaseIterationDelay
-        {
-            get { return _testCaseIterationDelay; }
-            set { _testCaseIterationDelay = value; }
-        }
+        [Argument(@"/d", @"/test-case-iteration-delay")]
+        public int TestCaseIterationDelay { get; set; } = 0;
 
-        [ArgumentAttribute(@"/g", @"/gets-per-iteration")]
-        public  int GetsPerIteration
-        {
-            get { return _getsPerIteration; }
-            set { _getsPerIteration = value; }
-        }
+        [Argument(@"/i", @"/test-case-iterations")]
+        public int TestCaseIterations { get; set; } = 20;
 
-        [ArgumentAttribute(@"/u", @"/updates-per-iteration")]
-        public  int UpdatesPerIteration
-        {
-            get { return _updatesPerIteration; }
-            set { _updatesPerIteration = value; }
-        }
+        [Argument(@"/t", @"/thread-count")]
+        public int ThreadCount { get; set; } = 1;
 
-        [ArgumentAttribute(@"/m", @"/item-size")]
-        public  int DataSize
-        {
-            get { return _dataSize; }
-            set { _dataSize = value; }
-        }
+        [Argument(@"/n", @"/item-count")]
+        public int TotalLoopCount { get; set; } = 0;
 
-        [ArgumentAttribute(@"/e", @"/sliding-expiration")]
-        public  int Expiration
-        {
-            get { return _expiration; }
-            set { _expiration = value; }
-        }
-
-        [ArgumentAttribute(@"/t", @"/thread-count")]
-        public  int ThreadCount
-        {
-            get { return _threadCount; }
-            set { _threadCount = value; }
-        }
-
-        [ArgumentAttribute(@"/r", @"/reporting-interval")]
-        public  int ReportingInterval
-        {
-            get { return _reportingInterval; }
-            set { _reportingInterval = value; }
-        }
+        [Argument(@"/u", @"/updates-per-iteration")]
+        public int UpdatesPerIteration { get; set; } = 1;
     }
 
-    sealed class StressTestTool
+    internal sealed class StressTestTool
     {
-        static private StressTestToolParam cParam = new StressTestToolParam();
-        		/// <summary>
-		/// Sets the application level parameters to those specified at the command line.
-		/// </summary>
-		/// <param name="args">array of command line parameters</param>
-        static private bool ApplyParameters(string[] args)
-        {    
+        private static StressTestToolParam cParam = new StressTestToolParam();
+
+        /// <summary>
+        ///     The main entry point for the tool.
+        /// </summary>
+        public static void Run(string[] args)
+        {
             try
             {
-                if (cParam.CacheId == String.Empty ||cParam.CacheId == null)
+                object param = new StressTestToolParam();
+                CommandLineArgumentParser.CommandLineParser(ref param, args);
+                cParam = (StressTestToolParam) param;
+                if (cParam.IsUsage)
+                {
+                    AssemblyUsage.PrintLogo(cParam.IsLogo);
+                    AssemblyUsage.PrintUsage();
+                    return;
+                }
+
+                if (!ApplyParameters(args))
+                {
+                    return;
+                }
+                //if (!ValidateParameters()) return;
+
+
+                Console.WriteLine("cacheId = {0}, total-loop-count = {1}, test-case-iterations = {2}, testCaseIterationDelay = {3}, gets-per-iteration = {4}, updates-per-iteration = {5}, data-size = {6}, expiration = {7}, thread-count = {8}, reporting-interval = {9}.", cParam.CacheId, cParam.TotalLoopCount, cParam.TestCaseIterations, cParam.TestCaseIterationDelay, cParam.GetsPerIteration, cParam.UpdatesPerIteration, cParam.DataSize, cParam.Expiration, cParam.ThreadCount, cParam.ReportingInterval);
+                Console.WriteLine("-------------------------------------------------------------------\n");
+                Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.Normal;
+
+                var threadTest = new ThreadTest(cParam.CacheId, cParam.TotalLoopCount, cParam.TestCaseIterations, cParam.TestCaseIterationDelay, cParam.GetsPerIteration, cParam.UpdatesPerIteration, cParam.DataSize, cParam.Expiration, cParam.ThreadCount, cParam.ReportingInterval, cParam.IsLogo);
+                threadTest.Test();
+            }
+            catch (Exception e)
+            {
+                Console.Error.WriteLine("Error: " + e.Message);
+                Console.Error.WriteLine();
+                Console.Error.WriteLine(e.ToString());
+            }
+        }
+
+        /// <summary>
+        ///     Sets the application level parameters to those specified at the command line.
+        /// </summary>
+        /// <param name="args">array of command line parameters</param>
+        private static bool ApplyParameters(string[] args)
+        {
+            try
+            {
+                if (cParam.CacheId == string.Empty || cParam.CacheId == null)
                 {
                     Console.Error.WriteLine("Error: cache name not specified");
                     return false;
@@ -161,43 +143,5 @@ namespace Alachisoft.NCache.Tools.StressTestTool
             AssemblyUsage.PrintLogo(cParam.IsLogo);
             return true;
         }
-
-        /// <summary>
-		/// The main entry point for the tool.
-		/// </summary>
-		static public void Run(string[] args)
-		{
-			try
-			{
-                object param = new StressTestToolParam();
-                CommandLineArgumentParser.CommandLineParser(ref param, args);
-                cParam = (StressTestToolParam)param;
-                if (cParam.IsUsage)
-                {
-                    AssemblyUsage.PrintLogo(cParam.IsLogo);
-                    AssemblyUsage.PrintUsage();
-                    return;
-                }
-
-                if (!ApplyParameters(args)) return;
-                //if (!ValidateParameters()) return;
-
-
-
-                Console.WriteLine("cacheId = {0}, total-loop-count = {1}, test-case-iterations = {2}, testCaseIterationDelay = {3}, gets-per-iteration = {4}, updates-per-iteration = {5}, data-size = {6}, expiration = {7}, thread-count = {8}, reporting-interval = {9}.", cParam.CacheId,cParam.TotalLoopCount,cParam.TestCaseIterations, cParam.TestCaseIterationDelay,cParam.GetsPerIteration,cParam.UpdatesPerIteration,cParam.DataSize,cParam.Expiration,cParam.ThreadCount,cParam.ReportingInterval);
-                Console.WriteLine("-------------------------------------------------------------------\n");
-                Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.Normal;
-
-                ThreadTest threadTest = new ThreadTest(cParam.CacheId, cParam.TotalLoopCount,cParam.TestCaseIterations,cParam.TestCaseIterationDelay,cParam.GetsPerIteration,cParam.UpdatesPerIteration,cParam.DataSize,cParam.Expiration,cParam.ThreadCount,cParam.ReportingInterval,cParam.IsLogo);
-                threadTest.Test();
-            }
-            catch (Exception e)
-            {
-                Console.Error.WriteLine("Error: " + e.Message);
-                Console.Error.WriteLine();
-                Console.Error.WriteLine(e.ToString());
-
-            }
-        }       
     }
 }

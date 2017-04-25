@@ -13,19 +13,10 @@
 // limitations under the License.
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-
-using Alachisoft.NCache.Runtime.Exceptions;
-
-using Alachisoft.NCache.Caching;
 using Alachisoft.NCache.Tools.Common;
-using Alachisoft.NCache.Management;
 using Alachisoft.NCache.Common.Util;
-using Alachisoft.NCache.Config;
-using Alachisoft.NCache.ServiceControl;
 using Alachisoft.NCache.Common;
-using Alachisoft.NCache.Management.ServiceControl;
 
 namespace Alachisoft.NCache.Tools.VerifyNCacheLicence
 {

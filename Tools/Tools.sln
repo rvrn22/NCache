@@ -1,36 +1,36 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListCaches.4x", "ListCaches\ListCaches.4x.csproj", "{5D753ABA-4B74-4473-9149-6DA9E869C542}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListCaches", "ListCaches\ListCaches.csproj", "{5D753ABA-4B74-4473-9149-6DA9E869C542}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StartCache.4x", "StartCache\StartCache.4x.csproj", "{8F90193E-9A84-42EF-9DF6-B71132517235}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StartCache", "StartCache\StartCache.csproj", "{8F90193E-9A84-42EF-9DF6-B71132517235}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StopCache.4x", "StopCache\StopCache.4x.csproj", "{7050480A-4A27-4F13-B685-AB67EC527A7E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StopCache", "StopCache\StopCache.csproj", "{7050480A-4A27-4F13-B685-AB67EC527A7E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddTestData.4x", "AddTestData\AddTestData.4x.csproj", "{BC3A32C9-FFFE-4964-BDB4-6892461EEE77}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddTestData", "AddTestData\AddTestData.csproj", "{BC3A32C9-FFFE-4964-BDB4-6892461EEE77}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClearCache.4x", "ClearCache\ClearCache.4x.csproj", "{A20874A0-CD92-4F5B-B0CE-A79F9F8BEBC2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClearCache", "ClearCache\ClearCache.csproj", "{A20874A0-CD92-4F5B-B0CE-A79F9F8BEBC2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetCacheCount.4x", "GetCacheCount\GetCacheCount.4x.csproj", "{32F18F99-5B3F-484E-B87E-B9C0F4FD3552}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetCacheCount", "GetCacheCount\GetCacheCount.csproj", "{32F18F99-5B3F-484E-B87E-B9C0F4FD3552}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddNode.4x", "AddNode\AddNode.4x.csproj", "{1F569DB6-C11E-4F52-9428-D6B7FF8E987A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddNode", "AddNode\AddNode.csproj", "{1F569DB6-C11E-4F52-9428-D6B7FF8E987A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoveNode.4x", "RemoveNode\RemoveNode.4x.csproj", "{988F73A2-6C21-45D2-AB92-8D43165C46F5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoveNode", "RemoveNode\RemoveNode.csproj", "{988F73A2-6C21-45D2-AB92-8D43165C46F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DumpCache.4x", "DumpCache\DumpCache.4x.csproj", "{8BC636E0-CA15-45FB-B738-471B9FC2F107}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DumpCache", "DumpCache\DumpCache.csproj", "{8BC636E0-CA15-45FB-B738-471B9FC2F107}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StressTestTool.4x", "StressTestTool\StressTestTool.4x.csproj", "{6B2C3E1B-C789-4CDC-BDFA-B9F9FE75CD0C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StressTestTool", "StressTestTool\StressTestTool.csproj", "{6B2C3E1B-C789-4CDC-BDFA-B9F9FE75CD0C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddClientNode.4x", "AddClientNode\AddClientNode.4x.csproj", "{FE9CC18D-5392-4F0B-9628-3D1FF90D986E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddClientNode", "AddClientNode\AddClientNode.csproj", "{FE9CC18D-5392-4F0B-9628-3D1FF90D986E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoveClientNode.4x", "RemoveClientNode\RemoveClientNode.4x.csproj", "{D3957D74-17B3-4626-9BF1-D917AEB67D4F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoveClientNode", "RemoveClientNode\RemoveClientNode.csproj", "{D3957D74-17B3-4626-9BF1-D917AEB67D4F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigureCache", "ConfigureCache\ConfigureCache.csproj", "{CAF1B738-D6A9-482D-8B18-73BBDA1AECB3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToolServerOperations.4x", "ToolServerOperations\ToolServerOperations.4x.csproj", "{200CB06E-BC59-469C-9339-81A0C16D79CF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToolServerOperations", "ToolServerOperations\ToolServerOperations.csproj", "{200CB06E-BC59-469C-9339-81A0C16D79CF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddQueryIndex", "AddQueryIndex\AddQueryIndex.csproj", "{C1BF516D-53BF-4F86-B1AC-A8BAB29B3840}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoveCache.4x", "RemoveCache\RemoveCache.4x.csproj", "{63FC5CC8-829D-4E3C-8A5A-FFA9B67C13E3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoveCache", "RemoveCache\RemoveCache.csproj", "{63FC5CC8-829D-4E3C-8A5A-FFA9B67C13E3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoveQueryIndex", "RemoveQueryIndex\RemoveQueryIndex.csproj", "{BFD6721E-51E9-4983-B2C2-D84A31546E87}"
 EndProject

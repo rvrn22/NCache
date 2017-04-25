@@ -11,39 +11,36 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
 using System;
-using System.Collections;
+using System.Diagnostics;
 using System.Threading;
-
-
-
 using Alachisoft.NCache.Runtime;
 using Alachisoft.NCache.Web.Caching;
 using Factory = Alachisoft.NCache.Web.Caching.NCache;
 
 
-
 namespace Alachisoft.NCache.Tools.StressTestTool
 {
     /// <summary>
-    /// ThreadTest class, that contains all the logic used to instantiate multiple threads
-    /// on the basis of given parameters.
+    ///     ThreadTest class, that contains all the logic used to instantiate multiple threads
+    ///     on the basis of given parameters.
     /// </summary>
-    internal sealed class ThreadTest 
+    internal sealed class ThreadTest
     {
-        string _cacheId = "";
-        int _totalLoopCount = 0;
-        int _testCaseIterations = 10;
-        int _testCaseIterationDelay = 0;
-        int _getsPerIteration = 1;
-        int _updatesPerIteration = 1;
-        int _dataSize = 1024;
-        int _expiration = 300;
-        int _threadCount = 1;
-        int _reportingInterval = 5000;
+        private readonly string _cacheId = "";
+        private readonly int _dataSize = 1024;
+        private readonly int _expiration = 300;
+        private readonly int _getsPerIteration = 1;
+        private readonly int _reportingInterval = 5000;
+        private readonly int _testCaseIterationDelay;
+        private readonly int _testCaseIterations = 10;
+        private readonly int _threadCount = 1;
+        private readonly int _totalLoopCount;
+        private readonly int _updatesPerIteration = 1;
 
         /// <summary>
-        /// Overriden constructor that uses all user supplied parameters
+        ///     Overriden constructor that uses all user supplied parameters
         /// </summary>
         public ThreadTest(string cacheId, int totalLoopCount, int testCaseIterations, int testCaseIterationDelay, int getsPerIteration, int updatesPerIteration, int dataSize, int expiration, int threadCount, int reportingInterval, bool noLogo)
         {
@@ -60,33 +57,32 @@ namespace Alachisoft.NCache.Tools.StressTestTool
         }
 
         /// <summary>
-        /// Main test starting point. This method instantiate multiple threads and keeps track of 
-        /// all of them.
+        ///     Main test starting point. This method instantiate multiple threads and keeps track of
+        ///     all of them.
         /// </summary>
         public void Test()
         {
             try
             {
-                Thread[] threads = new Thread[_threadCount];
+                var threads = new Thread[_threadCount];
 
-                Cache cache = Factory.InitializeCache(_cacheId);
+                var cache = Factory.InitializeCache(_cacheId);
                 cache.ExceptionsEnabled = true;
 
-                string pid = System.Diagnostics.Process.GetCurrentProcess().Id.ToString();
+                var pid = Process.GetCurrentProcess().Id.ToString();
 
-                for (int threadIndex = 0; threadIndex < _threadCount; threadIndex++)
+                for (var threadIndex = 0; threadIndex < _threadCount; threadIndex++)
                 {
-                    ThreadContainer tc = new ThreadContainer(cache, _totalLoopCount, _testCaseIterations, _testCaseIterationDelay, _getsPerIteration, _updatesPerIteration, _dataSize, _expiration, _threadCount, _reportingInterval, threadIndex);
-                    ThreadStart threadDelegate = new ThreadStart(tc.DoTest);
-                    threads[threadIndex] = new Thread(threadDelegate);
-                    threads[threadIndex].Name = "ThreadIndex: " + threadIndex;
+                    var tc = new ThreadContainer(cache, _totalLoopCount, _testCaseIterations, _testCaseIterationDelay, _getsPerIteration, _updatesPerIteration, _dataSize, _expiration, _threadCount, _reportingInterval, threadIndex);
+                    ThreadStart threadDelegate = tc.DoTest;
+                    threads[threadIndex] = new Thread(threadDelegate) {Name = "ThreadIndex: " + threadIndex};
                     threads[threadIndex].Start();
                 }
 
                 //--- wait on threads to complete their work before finishing
-                for (int threadIndex = 0; threadIndex < threads.Length; threadIndex++)
+                foreach (var t in threads)
                 {
-                    threads[threadIndex].Join();
+                    t.Join();
                 }
 
                 cache.Dispose();
@@ -101,29 +97,29 @@ namespace Alachisoft.NCache.Tools.StressTestTool
     }
 
     /// <summary>
-    /// ThreadContainer class.
-    /// This class is being used to be run under each thread.
+    ///     ThreadContainer class.
+    ///     This class is being used to be run under each thread.
     /// </summary>
     internal class ThreadContainer
     {
-        Cache _cache = null;
-        int _totalLoopCount = 0;
-        int _testCaseIterations = 10;
-        int _testCaseIterationDelay = 0;
-        int _getsPerIteration = 1;
-        int _updatesPerIteration = 1;
-        int _dataSize = 1024;
-        int _expiration = 300;
-        int _threadCount = 1;
-        int _reportingInterval = 5000;
-        int _threadIndex = 0;
-        int _pid = 0;
+        private readonly Cache _cache;
+        private readonly int _dataSize = 1024;
+        private readonly int _expiration = 300;
+        private readonly int _getsPerIteration = 1;
+        private int _pid;
+        private readonly int _reportingInterval = 5000;
+        private readonly int _testCaseIterationDelay;
+        private readonly int _testCaseIterations = 10;
+        private int _threadCount = 1;
+        private int _threadIndex;
+        private readonly int _totalLoopCount;
+        private readonly int _updatesPerIteration = 1;
+        private readonly int maxErrors = 1000;
 
-        int numErrors = 0;
-        int maxErrors = 1000;
+        private int numErrors;
 
         /// <summary>
-        /// Constructor
+        ///     Constructor
         /// </summary>
         public ThreadContainer(Cache cache, int totalLoopCount, int testCaseIterations, int testCaseIterationDelay, int getsPerIteration, int updatesPerIteration, int dataSize, int expiration, int threadCount, int reportingInterval, int threadIndex)
         {
@@ -136,14 +132,14 @@ namespace Alachisoft.NCache.Tools.StressTestTool
             _dataSize = dataSize;
             _expiration = expiration;
             _threadCount = threadCount;
-            _reportingInterval = reportingInterval;            
+            _reportingInterval = reportingInterval;
             _threadIndex = threadIndex;
 
-            _pid = System.Diagnostics.Process.GetCurrentProcess().Id;
+            _pid = Process.GetCurrentProcess().Id;
         }
 
         /// <summary>
-        /// Test starting call
+        ///     Test starting call
         /// </summary>
         public void DoTest()
         {
@@ -151,93 +147,88 @@ namespace Alachisoft.NCache.Tools.StressTestTool
         }
 
         /// <summary>
-        /// Perform Get/Insert operations on cache, bsed on user given input.
+        ///     Perform Get/Insert operations on cache, bsed on user given input.
         /// </summary>
         private void DoGetInsert()
         {
-
-            byte[] data = new byte[_dataSize];
+            var data = new byte[_dataSize];
 
             if (_totalLoopCount <= 0)
             {
                 // this means an infinite loop. user will have to do Ctrl-C to stop the program
-                for (long totalIndex = 0; ; totalIndex++)
+                for (long totalIndex = 0;; totalIndex++)
                 {
                     ProcessGetInsertIteration(data);
                     if (totalIndex >= _reportingInterval)
                     {
-                        long count = _cache.Count;
-                        System.Console.WriteLine(DateTime.Now.ToString() + ": Cache count: " + count);
+                        var count = _cache.Count;
+                        Console.WriteLine(DateTime.Now + ": Cache count: " + count);
                         totalIndex = 1;
                     }
                 }
             }
-            else
+            for (long totalIndex = 0; totalIndex < _totalLoopCount; totalIndex++)
             {
-                for (long totalIndex = 0; totalIndex < _totalLoopCount; totalIndex++)
+                ProcessGetInsertIteration(data);
+                if (totalIndex >= _reportingInterval)
                 {
-                    ProcessGetInsertIteration(data);
-                    if (totalIndex >= _reportingInterval)
-                    {
-                        long count = _cache.Count;
-                        System.Console.WriteLine(DateTime.Now.ToString() + ": Cache count: " + count);
-                    }
+                    var count = _cache.Count;
+                    Console.WriteLine(DateTime.Now + ": Cache count: " + count);
                 }
             }
         }
 
         /// <summary>
-        /// Perform Get/Insert task on cache.
-        /// Called by DoGetInsert method
+        ///     Perform Get/Insert task on cache.
+        ///     Called by DoGetInsert method
         /// </summary>
         private void ProcessGetInsertIteration(byte[] data)
         {
-            string guid = System.Guid.NewGuid().ToString(); //create a unique key to be inserted in store.
+            var guid = Guid.NewGuid().ToString(); //create a unique key to be inserted in store.
 
             for (long testCaseIndex = 0; testCaseIndex < _testCaseIterations; testCaseIndex++)
             {
-                string key = guid;
+                var key = guid;
 
-                for (int getsIndex = 0; getsIndex < _getsPerIteration; getsIndex++)
+                for (var getsIndex = 0; getsIndex < _getsPerIteration; getsIndex++)
                 {
                     try
                     {
-                        object obj = _cache.Get(key);
+                        var obj = _cache.Get(key);
                     }
                     catch (Exception e)
                     {
-                        Console.Error.WriteLine("GET Error: Key: " + key + ", Exception: " + e.ToString() + "\n");
+                        Console.Error.WriteLine("GET Error: Key: " + key + ", Exception: " + e + "\n");
                         numErrors++;
-                        if (this.numErrors > this.maxErrors)
+                        if (numErrors > maxErrors)
                         {
                             Console.Error.WriteLine("Too many errors. Press any key to exit ...");
                             Console.ReadKey(true);
-                            System.Environment.Exit(0);
+                            Environment.Exit(0);
                             //This causes the programe to crash
                             //throw e;
                         }
                     }
-
                 }
 
-                for (int updatesIndex = 0; updatesIndex < _updatesPerIteration; updatesIndex++)
+                for (var updatesIndex = 0; updatesIndex < _updatesPerIteration; updatesIndex++)
                 {
                     try
                     {
                         _cache.Insert(key, data,
-                                                Cache.NoAbsoluteExpiration,
-                                                new TimeSpan(0, 0, 0, _expiration),
-                                                CacheItemPriority.Default);
+                            Cache.NoAbsoluteExpiration,
+                            new TimeSpan(0, 0, 0, _expiration),
+                            CacheItemPriority.Default);
                     }
                     catch (Exception e)
                     {
-                        Console.Error.WriteLine("INSERT Error: Key: " + key + ", Exception: " + e.ToString() + "\n");
+                        Console.Error.WriteLine("INSERT Error: Key: " + key + ", Exception: " + e + "\n");
                         numErrors++;
-                        if (numErrors > this.maxErrors)
+                        if (numErrors > maxErrors)
                         {
                             Console.Error.WriteLine("Too many errors. Press any key to exit ...");
                             Console.ReadKey(true);
-                            System.Environment.Exit(0);
+                            Environment.Exit(0);
                             //This causes the programe to crash
                             //throw e;
                         }
@@ -249,17 +240,16 @@ namespace Alachisoft.NCache.Tools.StressTestTool
                     // Sleep for this many seconds
                     Thread.Sleep(_testCaseIterationDelay * 1000);
                 }
-
             }
         }
+        //}
+        //    return Environment.MachineName + "key:" + Thread.CurrentThread.Name + ":" + index;
+        //{
+        //private string GetKey(long index)
+        /// </summary>
+        /// Although not been called by any method.
+        /// Creates and returns a unique key on the basis of thread index 
 
         /// <summary>
-        /// Creates and returns a unique key on the basis of thread index 
-        /// Although not been called by any method.
-        /// </summary>
-        //private string GetKey(long index)
-        //{
-        //    return Environment.MachineName + "key:" + Thread.CurrentThread.Name + ":" + index;
-        //}
     }
 }
